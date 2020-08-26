@@ -1,0 +1,17 @@
+grpcServerConfig:
+  productConfig:
+    port: 1
+grpcClientConfig:
+  discountConfig:
+    host: http://localhost
+    port: 1
+useCaseConfig:
+  productConfig:
+    dsConfig:
+      type: t
+      host: localhost
+      database: test
+  discountConfig:
+    dsConfig:
+      type: e
+      host: http://localhost:1
