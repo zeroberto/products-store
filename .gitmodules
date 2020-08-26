@@ -1,0 +1,4 @@
+[submodule "products-list/src/main/protobuf"]
+	path = products-list/src/main/protobuf
+	url = git@github.com:zeroberto/products-store-proto.git
+	branch = master
