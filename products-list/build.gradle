@@ -1,0 +1,100 @@
+plugins {
+  id 'application'
+  id "com.google.protobuf" version "$protobufGradlePluginVersion"
+  id 'jacoco'
+  id 'java'
+  id 'pmd'
+}
+
+group = 'com.github.zeroberto.productsstore'
+version = '1.0.0'
+sourceCompatibility = '14'
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  annotationProcessor "org.projectlombok:lombok:$lombokVersion"
+
+  compileOnly "org.apache.tomcat:annotations-api:$annotationsApiVersion"
+  compileOnly "org.projectlombok:lombok:$lombokVersion"
+
+  implementation "io.grpc:grpc-netty-shaded:$protobufVersion"
+  implementation "io.grpc:grpc-protobuf:$protobufVersion"
+  implementation "io.grpc:grpc-stub:$protobufVersion"
+  implementation "javax.annotation:javax.annotation-api:$javaxAnnotationApiVersion"
+  implementation "org.yaml:snakeyaml:$snakeyamlVersion"
+  implementation "org.mongodb:mongodb-driver:$mongoDriverVersion"
+
+  testAnnotationProcessor "org.projectlombok:lombok:$lombokVersion"
+  testCompileOnly "org.projectlombok:lombok:$lombokVersion"
+  testImplementation "org.junit.jupiter:junit-jupiter:$junitJupiterVersion"
+  testImplementation "org.mockito:mockito-inline:$mockitoVersion"
+  testImplementation "org.mockito:mockito-junit-jupiter:$mockitoVersion"
+}
+
+test {
+  useJUnitPlatform()
+  testLogging {
+    events "passed", "skipped", "failed"
+  }
+  finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+  dependsOn test
+  reports {
+    xml.enabled false
+    csv.enabled false
+    html.destination file("${buildDir}/jacocoHtml")
+  }
+}
+
+application {
+  mainClassName = 'com.github.zeroberto.productsstore.Application'
+}
+
+jar {
+  archiveFileName = 'app.jar'
+  manifest {
+    attributes(
+      'Main-Class': "${application.mainClassName}"
+    )
+  }
+}
+
+sourceSets {
+  main {
+    proto {
+      srcDir 'src/main/protobuf/proto/discountcalculator'
+      srcDir 'src/main/protobuf/proto/productslist'
+    }
+    java {
+      srcDir 'build/generated/source/proto/main/grpc'
+      srcDir 'build/generated/source/proto/main/java'
+    }
+  }
+}
+
+protobuf {
+  protoc {
+    artifact = "com.google.protobuf:protoc:$protobufProtocVersion"
+  }
+  plugins {
+    grpc {
+      artifact = "io.grpc:protoc-gen-grpc-java:$protocGenGrpcJavaVersion"
+    }
+  }
+  generateProtoTasks {
+    all()*.plugins {
+      grpc {}
+    }
+  }
+}
+
+pmd {
+  consoleOutput = true
+  toolVersion = "$pmdToolVersion"
+  rulePriority = 5
+}
