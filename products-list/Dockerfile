@@ -9,6 +9,8 @@ FROM openjdk:14
 
 MAINTAINER zeroberto
 
-COPY --from=build /usr/src/app/build/libs/*.jar /usr/src
+COPY --from=build /usr/src/app/build/distributions/app.tgz ./
 
-CMD [ "java", "-jar", "/usr/src/app.jar" ]
+RUN tar -xzf /app.tgz && rm -rf /app.tgz
+
+ENTRYPOINT [ "/app/bin/products-list" ]
