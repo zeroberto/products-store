@@ -54,6 +54,7 @@ public class AppConfig {
     private String type;
     private String host;
     private String database;
+    private AuthConfig auth;
   }
 
   @Getter
@@ -61,5 +62,15 @@ public class AppConfig {
   @NoArgsConstructor
   public static class ServerConfig {
     private int port;
+  }
+
+  @Getter
+  @Setter
+  @NoArgsConstructor
+  public static class AuthConfig {
+    private String type;
+    private String user;
+    private String pass;
+    private String repo;
   }
 }
