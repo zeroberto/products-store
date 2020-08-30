@@ -1,6 +1,6 @@
 package com.github.zeroberto.productsstore.datastore;
 
-import com.github.zeroberto.productsstore.cmd.grpcclient.DiscountGrpcClient;
+import com.github.zeroberto.productsstore.cmd.grpc.client.DiscountGrpcClient;
 import com.github.zeroberto.productsstore.datastore.network.DiscountDataStoreGrpc;
 import com.github.zeroberto.productsstore.discountcalculator.DiscountCalculatorServiceGrpc;
 import com.github.zeroberto.productsstore.discountcalculator.DiscountRequest;

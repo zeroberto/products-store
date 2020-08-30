@@ -1,6 +1,6 @@
 package com.github.zeroberto.productsstore.driver;
 
-import com.github.zeroberto.productsstore.cmd.grpcclient.DiscountGrpcClient;
+import com.github.zeroberto.productsstore.cmd.grpc.client.DiscountGrpcClient;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor

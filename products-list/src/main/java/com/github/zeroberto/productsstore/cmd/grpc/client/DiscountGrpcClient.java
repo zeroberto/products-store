@@ -1,4 +1,4 @@
-package com.github.zeroberto.productsstore.cmd.grpcclient;
+package com.github.zeroberto.productsstore.cmd.grpc.client;
 
 import com.github.zeroberto.productsstore.discountcalculator.DiscountCalculatorServiceGrpc;
 import io.grpc.ManagedChannel;

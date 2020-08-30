@@ -1,6 +1,6 @@
-package com.github.zeroberto.productsstore.cmd.grpcserver;
+package com.github.zeroberto.productsstore.cmd.grpc.server;
 
-import com.github.zeroberto.productsstore.cmd.grpcservice.ProductsListGrpcService;
+import com.github.zeroberto.productsstore.cmd.grpc.service.ProductsListGrpcService;
 import com.github.zeroberto.productsstore.config.AppConfig;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
