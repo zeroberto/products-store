@@ -11,6 +11,11 @@ useCaseConfig:
       type: t
       host: localhost
       database: test
+      auth:
+        type: env
+        user: user
+        pass: test
+        repo: test
   discountConfig:
     dsConfig:
       type: e

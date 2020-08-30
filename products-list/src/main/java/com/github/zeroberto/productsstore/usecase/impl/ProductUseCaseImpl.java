@@ -1,6 +1,8 @@
 package com.github.zeroberto.productsstore.usecase.impl;
 
 import com.github.zeroberto.productsstore.datastore.ProductDataStore;
+import com.github.zeroberto.productsstore.exceptions.DataStoreDatabaseException;
+import com.github.zeroberto.productsstore.exceptions.ProductUseCaseException;
 import com.github.zeroberto.productsstore.model.DiscountedProduct;
 import com.github.zeroberto.productsstore.model.Product;
 import com.github.zeroberto.productsstore.usecase.DiscountUseCase;
@@ -19,12 +21,16 @@ public class ProductUseCaseImpl implements ProductUseCase {
 
   @Override
   public List<Product> listProducts() {
-    return productDataStore.findAll();
+    try {
+      return productDataStore.findAll();
+    } catch (DataStoreDatabaseException e) {
+      throw new ProductUseCaseException(e);
+    }
   }
 
   @Override
   public List<DiscountedProduct> listDiscountedProductsByUser(long userId) {
-    return productDataStore.findAll()
+    return listProducts()
       .stream()
       .map(product -> DiscountedProduct.builder()
         .product(product)

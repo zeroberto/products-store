@@ -11,6 +11,11 @@ useCaseConfig:
       type: mongo
       host: localhost:27017
       database: products
+      auth:
+        type: plain
+        user: root
+        pass: insecure
+        repo: admin
   discountConfig:
     dsConfig:
       type: grpc

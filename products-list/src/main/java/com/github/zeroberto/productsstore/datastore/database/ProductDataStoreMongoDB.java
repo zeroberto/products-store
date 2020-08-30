@@ -2,6 +2,7 @@ package com.github.zeroberto.productsstore.datastore.database;
 
 import com.github.zeroberto.productsstore.datastore.ProductDataStore;
 import com.github.zeroberto.productsstore.driver.ProductMongoClientBuilder;
+import com.github.zeroberto.productsstore.exceptions.DataStoreDatabaseException;
 import com.github.zeroberto.productsstore.model.Product;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -22,10 +23,14 @@ public class ProductDataStoreMongoDB implements ProductDataStore {
 
   @Override
   public List<Product> findAll() {
-    MongoDatabase mongoDatabase = productMongoClientBuilder.build().getDatabase(databaseName);
-    MongoCollection<Document> products = mongoDatabase.getCollection("products");
-    final List<Document> documents = products.find().into(new LinkedList<>());
-    return documents.stream().map(this::toProduct).collect(toList());
+    try {
+      MongoDatabase mongoDatabase = productMongoClientBuilder.build().getDatabase(databaseName);
+      MongoCollection<Document> products = mongoDatabase.getCollection("products");
+      final List<Document> documents = products.find().into(new LinkedList<>());
+      return documents.stream().map(this::toProduct).collect(toList());
+    } catch (Exception e) {
+      throw new DataStoreDatabaseException(e);
+    }
   }
 
   @Nonnull

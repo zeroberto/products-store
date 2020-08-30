@@ -24,8 +24,7 @@ public final class Container {
       productMongoClientBuilder = new ProductMongoClientBuilder(appConfig
         .getUseCaseConfig()
         .getProductConfig()
-        .getDsConfig()
-        .getHost());
+        .getDsConfig());
     }
     return productMongoClientBuilder;
   }
