@@ -3,12 +3,12 @@ plugins {
   id "com.google.protobuf" version "$protobufGradlePluginVersion"
   id 'jacoco'
   id 'java'
-  id 'pmd'
 }
 
 group = 'com.github.zeroberto.productsstore'
 version = '1.0.0'
 sourceCompatibility = '14'
+targetCompatibility = '14'
 
 repositories {
   mavenCentral()
@@ -55,12 +55,27 @@ application {
   mainClassName = 'com.github.zeroberto.productsstore.Application'
 }
 
+run {
+  systemProperty 'profile', System.getProperty('profile', '')
+}
+
 jar {
   archiveFileName = 'app.jar'
   manifest {
     attributes(
       'Main-Class': "${application.mainClassName}"
     )
+  }
+}
+
+distributions {
+  main {
+    distributionBaseName = 'app'
+    version = ''
+    distZip.enabled = false
+  }
+  tasks.withType(Tar) {
+    compression = Compression.GZIP
   }
 }
 
@@ -91,10 +106,4 @@ protobuf {
       grpc {}
     }
   }
-}
-
-pmd {
-  consoleOutput = true
-  toolVersion = "$pmdToolVersion"
-  rulePriority = 5
 }
