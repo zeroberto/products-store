@@ -12,12 +12,16 @@ services:
     volumes:
       - ./user_db:/docker-entrypoint-initdb.d
       - /containers/postgresql:/var/lib/postgresql/data
+    networks: 
+      - products-store
 
   adminer:
     image: adminer
     restart: always
     ports:
       - 9900:8080
+    networks: 
+      - products-store
 
   product-db:
     image: mongo
@@ -30,6 +34,8 @@ services:
     volumes:
       - ./product_db:/docker-entrypoint-initdb.d
       - /containers/mongo:/data/db
+    networks: 
+      - products-store
 
   mongo-express:
     image: mongo-express
@@ -40,3 +46,10 @@ services:
       ME_CONFIG_MONGODB_SERVER: product-db
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
       ME_CONFIG_MONGODB_ADMINPASSWORD: insecure
+    networks: 
+      - products-store
+
+networks:
+  products-store:
+    name: products-store
+    driver: bridge

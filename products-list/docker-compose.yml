@@ -7,3 +7,12 @@ services:
     image: products-list
     ports: 
       - 8082:8080
+    env_file:
+      - .env
+    networks:
+      - products-store
+
+networks:
+  products-store:
+    name: products-store
+    driver: bridge
