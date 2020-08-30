@@ -1,6 +1,8 @@
-package com.github.zeroberto.productsstore.cmd.grpcservice;
+package com.github.zeroberto.productsstore.cmd.grpc.service;
 
 import com.github.zeroberto.productsstore.container.Container;
+import com.github.zeroberto.productsstore.exceptions.ProductUseCaseException;
+import com.github.zeroberto.productsstore.model.Discount;
 import com.github.zeroberto.productsstore.model.DiscountedProduct;
 import com.github.zeroberto.productsstore.model.Product;
 import com.github.zeroberto.productsstore.productslist.ProductsListRequest;
@@ -14,6 +16,8 @@ import lombok.extern.java.Log;
 import java.util.List;
 
 import static com.github.zeroberto.productsstore.container.usecasefactory.ProductUseCaseFactory.makeProductUseCase;
+import static java.util.Objects.nonNull;
+import static java.util.logging.Level.SEVERE;
 
 @Log
 @RequiredArgsConstructor
@@ -28,18 +32,23 @@ public class ProductsListGrpcService extends ProductsListServiceGrpc.ProductsLis
   ) {
     final ProductUseCase productUseCase = makeProductUseCase(container);
 
-    if (request.getUserId() != 0) {
-      processRequest(
-        productUseCase.listDiscountedProductsByUser(request.getUserId()),
-        responseObserver,
-        this::toProductsListResponse
-      );
-    } else {
-      processRequest(
-        productUseCase.listProducts(),
-        responseObserver,
-        this::toProductsListResponse
-      );
+    try {
+      if (request.getUserId() != 0) {
+        processRequest(
+          productUseCase.listDiscountedProductsByUser(request.getUserId()),
+          responseObserver,
+          this::toProductsListResponse
+        );
+      } else {
+        processRequest(
+          productUseCase.listProducts(),
+          responseObserver,
+          this::toProductsListResponse
+        );
+      }
+    } catch (ProductUseCaseException e) {
+      log.log(SEVERE, e.getMessage(), e);
+      responseObserver.onError(e);
     }
   }
 
@@ -62,15 +71,23 @@ public class ProductsListGrpcService extends ProductsListServiceGrpc.ProductsLis
   }
 
   private ProductsListResponse toProductsListResponse(final DiscountedProduct discountedProduct) {
-    return ProductsListResponse.newBuilder()
+    final var builder = ProductsListResponse.newBuilder()
       .setId(discountedProduct.getProduct().getId())
       .setPriceInCents(discountedProduct.getProduct().getPriceInCents())
       .setTilte(discountedProduct.getProduct().getTitle())
-      .setDescription(discountedProduct.getProduct().getDescription())
-      .setDiscount(
-        ProductsListResponse.Discount.newBuilder()
-          .setPct(discountedProduct.getDiscount().getPct())
-          .setValueInCents(discountedProduct.getDiscount().getValueInCents()))
+      .setDescription(discountedProduct.getProduct().getDescription());
+
+    if (nonNull(discountedProduct.getDiscount())) {
+      builder.setDiscount(toDiscount(discountedProduct.getDiscount()));
+    }
+
+    return builder.build();
+  }
+
+  private ProductsListResponse.Discount toDiscount(final Discount discount) {
+    return ProductsListResponse.Discount.newBuilder()
+      .setPct(discount.getPct())
+      .setValueInCents(discount.getValueInCents())
       .build();
   }
 
