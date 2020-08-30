@@ -2,3 +2,7 @@
 	path = products-list/src/main/protobuf
 	url = git@github.com:zeroberto/products-store-proto.git
 	branch = master
+[submodule "products-list-endpoint/protobuf"]
+	path = products-list-endpoint/protobuf
+	url = git@github.com:zeroberto/products-store-proto.git
+	branch = master

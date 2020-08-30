@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+  products-list-endpoint:
+    restart: always
+    build: .
+    image: products-list-endpoint
+    ports: 
+      - 8080:8080
+    networks: 
+      - products-store
+
+networks:
+  products-store:
+    name: products-store
+    driver: bridge
