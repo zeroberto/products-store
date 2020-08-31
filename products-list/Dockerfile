@@ -7,8 +7,6 @@ RUN gradle build
 
 FROM openjdk:14
 
-MAINTAINER zeroberto
-
 COPY --from=build /usr/src/app/build/distributions/app.tgz ./
 
 RUN tar -xzf /app.tgz && rm -rf /app.tgz
