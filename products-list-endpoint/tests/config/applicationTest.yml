@@ -1,0 +1,6 @@
+grpcClientConfig:
+  productsListConfig:
+    host: test
+    port: 1
+serverConfig:
+  port: 1
