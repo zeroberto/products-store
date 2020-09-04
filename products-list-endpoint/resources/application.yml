@@ -1,0 +1,6 @@
+grpcClientConfig:
+  productsListConfig:
+    host: localhost
+    port: 8082
+serverConfig:
+  port: 8080
