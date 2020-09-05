@@ -1,15 +1,15 @@
 grpcServerConfig:
   productConfig:
-    port: 8080
+    port: 58081
 grpcClientConfig:
   discountConfig:
     host: http://localhost
-    port: 8082
+    port: 58082
 useCaseConfig:
   productConfig:
     dsConfig:
       type: mongo
-      host: localhost:27017
+      host: localhost:47017
       database: products
       auth:
         type: plain
@@ -19,4 +19,4 @@ useCaseConfig:
   discountConfig:
     dsConfig:
       type: grpc
-      host: http://localhost:8082
+      host: http://localhost:58082

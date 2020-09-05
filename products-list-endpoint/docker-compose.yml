@@ -6,7 +6,7 @@ services:
     build: .
     image: products-list-endpoint
     ports: 
-      - 8080:8080
+      - 58080:8080
     env_file: 
       - .env
     networks: 

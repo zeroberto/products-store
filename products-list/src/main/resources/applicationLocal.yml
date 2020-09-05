@@ -4,7 +4,7 @@ grpcServerConfig:
 grpcClientConfig:
   discountConfig:
     host: http://localhost
-    port: 8082
+    port: 58082
 useCaseConfig:
   productConfig:
     dsConfig:
@@ -19,4 +19,4 @@ useCaseConfig:
   discountConfig:
     dsConfig:
       type: grpc
-      host: http://localhost:8082
+      host: http://localhost:58082

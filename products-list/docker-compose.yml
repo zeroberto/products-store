@@ -6,7 +6,7 @@ services:
     build: .
     image: products-list
     ports: 
-      - 8082:8080
+      - 58081:8080
     env_file:
       - .env
     networks:
