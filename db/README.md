@@ -78,7 +78,7 @@ to run the container in the background.
 
 To connect to the Adminer, access the address below, after the container initialization:
 
-> http://localhost:9000/
+> http://localhost:48080/
 
 Then enter the desired base information, found in the [docker-compose.yml](docker-compose.yml) file.
 
@@ -86,7 +86,7 @@ Then enter the desired base information, found in the [docker-compose.yml](docke
 
 To connect to the Mongo Express, access the address below, after the container initialization:
 
-> http://localhost:9001/
+> http://localhost:48081/
 
 ### Reset Databases
 
