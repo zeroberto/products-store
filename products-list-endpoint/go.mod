@@ -5,7 +5,6 @@ go 1.15
 require (
 	github.com/golang/protobuf v1.4.2
 	github.com/pkg/errors v0.9.1
-	github.com/zeroberto/go-ms-template v0.0.0-20200811025954-ee8e567e37f0
 	google.golang.org/grpc v1.33.0-dev
 	google.golang.org/protobuf v1.25.0
 	gopkg.in/yaml.v3 v3.0.0-20200615113413-eeeca48fe776
