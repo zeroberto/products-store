@@ -1,0 +1,18 @@
+version: "3.8"
+
+services:
+  discount-calculator:
+    restart: always
+    build: .
+    image: discount-calculator
+    ports: 
+      - 58082:8080
+    env_file: 
+      - .env
+    networks: 
+      - products-store
+
+networks:
+  products-store:
+    name: products-store
+    driver: bridge
