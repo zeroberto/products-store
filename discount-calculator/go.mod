@@ -5,7 +5,6 @@ go 1.15
 require (
 	github.com/golang/protobuf v1.4.2
 	github.com/pkg/errors v0.9.1
-	github.com/zeroberto/products-store/products-list-endpoint v0.0.0-20200905204738-7bb7eac88b92
 	google.golang.org/grpc v1.33.0-dev
 	google.golang.org/protobuf v1.25.0
 	gopkg.in/yaml.v3 v3.0.0-20200615113413-eeeca48fe776
