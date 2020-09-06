@@ -6,7 +6,7 @@ This service exposes a HTTP endpoint GET /product that returns a list of product
 
 * Ready to integrate a microservice ecosystem
 * Written in GoLang
-* Communication with other services via gRPC and HTT2
+* Communication with other services via gRPC and HTTP2
 
 ## Building and running
 
