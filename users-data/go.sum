@@ -21,6 +21,9 @@ github.com/google/go-cmp v0.4.0/go.mod h1:v8dTdLbMG2kIc/vJvl+f65V22dbkXbowE6jgT/
 github.com/google/go-cmp v0.5.0/go.mod h1:v8dTdLbMG2kIc/vJvl+f65V22dbkXbowE6jgT/gNBxE=
 github.com/pkg/errors v0.9.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
 github.com/prometheus/client_model v0.0.0-20190812154241-14fe0d1b01d4/go.mod h1:xMI15A0UPsDsEKsMN9yxemIoYk6Tm2C1GtYGdfGttqA=
+github.com/zeroberto/products-store v0.0.0-20200907003517-979ee5d2c401 h1:nZQ+cc136LBjEAoFQS5rC6lZ2HkQZdVoHvrM0G1M1WQ=
+github.com/zeroberto/products-store/products-list-endpoint v0.0.0-20200907003517-979ee5d2c401 h1:tFUChA5d0oJz74x/m1sGVwj1CjfhDzrL/0omZuJcANc=
+github.com/zeroberto/products-store/products-list-endpoint v0.0.0-20200907003517-979ee5d2c401/go.mod h1:rOWYBp0sChEAwlgkb9PNyKmivDV0u+FgnhBRCWoRmy8=
 golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2/go.mod h1:djNgcEr1/C05ACkg1iLfiJU5Ep61QUkGW8qpdssI0+w=
 golang.org/x/exp v0.0.0-20190121172915-509febef88a4/go.mod h1:CJ0aWSM057203Lf6IL+f9T1iT9GByDxfZKAQTCR3kQA=
 golang.org/x/lint v0.0.0-20190227174305-5b3e6a55c961/go.mod h1:wehouNa3lNwaWXcvxsM5YxQ5yQlVC4a0KAMCusXpPoU=
