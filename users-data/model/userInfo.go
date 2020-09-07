@@ -7,7 +7,7 @@ type UserInfo struct {
 	ID            int64
 	FirstName     string
 	LastName      string
-	DateOfBirthd  time.Time
+	DateOfBirth   time.Time
 	CreatedAt     time.Time
 	UpdatedAt     time.Time
 	DeactivatedAt time.Time
