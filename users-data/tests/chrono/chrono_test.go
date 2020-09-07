@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/zeroberto/products-store/products-list-endpoint/chrono"
+	"github.com/zeroberto/products-store/users-data/chrono"
 )
 
 func TestGetCurrentTime(t *testing.T) {
