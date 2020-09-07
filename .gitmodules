@@ -6,3 +6,7 @@
 	path = products-list-endpoint/protobuf
 	url = git@github.com:zeroberto/products-store-proto.git
 	branch = master
+[submodule "users-data/protobuf"]
+	path = users-data/protobuf
+	url = git@github.com:zeroberto/products-store-proto.git
+	branch = master
