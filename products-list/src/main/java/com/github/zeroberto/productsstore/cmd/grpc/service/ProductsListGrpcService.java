@@ -5,9 +5,9 @@ import com.github.zeroberto.productsstore.exceptions.ProductUseCaseException;
 import com.github.zeroberto.productsstore.model.Discount;
 import com.github.zeroberto.productsstore.model.DiscountedProduct;
 import com.github.zeroberto.productsstore.model.Product;
+import com.github.zeroberto.productsstore.productslist.ProductsListGrpc;
 import com.github.zeroberto.productsstore.productslist.ProductsListRequest;
 import com.github.zeroberto.productsstore.productslist.ProductsListResponse;
-import com.github.zeroberto.productsstore.productslist.ProductsListServiceGrpc;
 import com.github.zeroberto.productsstore.usecase.ProductUseCase;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ import static java.util.logging.Level.SEVERE;
 
 @Log
 @RequiredArgsConstructor
-public class ProductsListGrpcService extends ProductsListServiceGrpc.ProductsListServiceImplBase {
+public class ProductsListGrpcService extends ProductsListGrpc.ProductsListImplBase {
 
   private final Container container;
 

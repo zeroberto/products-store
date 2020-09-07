@@ -2,7 +2,7 @@ package com.github.zeroberto.productsstore.datastore;
 
 import com.github.zeroberto.productsstore.cmd.grpc.client.DiscountGrpcClient;
 import com.github.zeroberto.productsstore.datastore.network.DiscountDataStoreGrpc;
-import com.github.zeroberto.productsstore.discountcalculator.DiscountCalculatorServiceGrpc;
+import com.github.zeroberto.productsstore.discountcalculator.DiscountCalculatorGrpc;
 import com.github.zeroberto.productsstore.discountcalculator.DiscountRequest;
 import com.github.zeroberto.productsstore.discountcalculator.DiscountResponse;
 import com.github.zeroberto.productsstore.driver.DiscountGrpcClientBuilder;
@@ -20,12 +20,12 @@ import static org.mockito.Mockito.when;
 
 class DiscountDataStoreTest {
 
-  private DiscountCalculatorServiceGrpc.DiscountCalculatorServiceBlockingStub blockingStub;
+  private DiscountCalculatorGrpc.DiscountCalculatorBlockingStub blockingStub;
   private DiscountDataStore discountDataStore;
 
   @BeforeEach
   void setUp() {
-    blockingStub = mock(DiscountCalculatorServiceGrpc.DiscountCalculatorServiceBlockingStub.class);
+    blockingStub = mock(DiscountCalculatorGrpc.DiscountCalculatorBlockingStub.class);
 
     final var discountGrpcClientBuilder = mock(DiscountGrpcClientBuilder.class);
     final var discountGrpcClient = mock(DiscountGrpcClient.class);
