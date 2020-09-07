@@ -13,7 +13,7 @@ import (
 // ProductDataStoreGrpc is responsible for obtaining product data
 // through a gRPC client
 type ProductDataStoreGrpc struct {
-	Client productslist.ProductsListServiceClient
+	Client productslist.ProductsListClient
 }
 
 // FindAllWithDiscountByUserID is responsible for returning a list of discounted

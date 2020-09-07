@@ -11,7 +11,7 @@ import (
 type ServiceClientFactory struct{}
 
 // MakeProductsListServiceClient is responsible for build a ProductsListServiceClient instance
-func (scf *ServiceClientFactory) MakeProductsListServiceClient(c container.Container) (productslist.ProductsListServiceClient, error) {
+func (scf *ServiceClientFactory) MakeProductsListServiceClient(c container.Container) (productslist.ProductsListClient, error) {
 	conn, ok := c.Get(container.ProductsListServiceConnKey)
 	if !ok {
 		newConn, err := grpc.Dial(c.GetAppConfig().GrpcClientConfig.ProductsListConfig.GetURI(), grpc.WithInsecure())
@@ -21,5 +21,5 @@ func (scf *ServiceClientFactory) MakeProductsListServiceClient(c container.Conta
 		conn = newConn
 		c.Put(container.ProductsListServiceConnKey, conn)
 	}
-	return productslist.NewProductsListServiceClient(conn.(grpc.ClientConnInterface)), nil
+	return productslist.NewProductsListClient(conn.(grpc.ClientConnInterface)), nil
 }

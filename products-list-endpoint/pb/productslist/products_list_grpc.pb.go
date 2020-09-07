@@ -13,34 +13,34 @@ import (
 // is compatible with the grpc package it is being compiled against.
 const _ = grpc.SupportPackageIsVersion7
 
-// ProductsListServiceClient is the client API for ProductsListService service.
+// ProductsListClient is the client API for ProductsList service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type ProductsListServiceClient interface {
+type ProductsListClient interface {
 	// ListProducts is responsible for returning a list of all products with discounts
 	// applied for a given user, if an identifier is passed
-	ListProducts(ctx context.Context, in *ProductsListRequest, opts ...grpc.CallOption) (ProductsListService_ListProductsClient, error)
+	ListProducts(ctx context.Context, in *ProductsListRequest, opts ...grpc.CallOption) (ProductsList_ListProductsClient, error)
 }
 
-type productsListServiceClient struct {
+type productsListClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewProductsListServiceClient(cc grpc.ClientConnInterface) ProductsListServiceClient {
-	return &productsListServiceClient{cc}
+func NewProductsListClient(cc grpc.ClientConnInterface) ProductsListClient {
+	return &productsListClient{cc}
 }
 
-var productsListServiceListProductsStreamDesc = &grpc.StreamDesc{
+var productsListListProductsStreamDesc = &grpc.StreamDesc{
 	StreamName:    "ListProducts",
 	ServerStreams: true,
 }
 
-func (c *productsListServiceClient) ListProducts(ctx context.Context, in *ProductsListRequest, opts ...grpc.CallOption) (ProductsListService_ListProductsClient, error) {
-	stream, err := c.cc.NewStream(ctx, productsListServiceListProductsStreamDesc, "/productslist.ProductsListService/ListProducts", opts...)
+func (c *productsListClient) ListProducts(ctx context.Context, in *ProductsListRequest, opts ...grpc.CallOption) (ProductsList_ListProductsClient, error) {
+	stream, err := c.cc.NewStream(ctx, productsListListProductsStreamDesc, "/productslist.ProductsList/ListProducts", opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &productsListServiceListProductsClient{stream}
+	x := &productsListListProductsClient{stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -50,16 +50,16 @@ func (c *productsListServiceClient) ListProducts(ctx context.Context, in *Produc
 	return x, nil
 }
 
-type ProductsListService_ListProductsClient interface {
+type ProductsList_ListProductsClient interface {
 	Recv() (*ProductsListResponse, error)
 	grpc.ClientStream
 }
 
-type productsListServiceListProductsClient struct {
+type productsListListProductsClient struct {
 	grpc.ClientStream
 }
 
-func (x *productsListServiceListProductsClient) Recv() (*ProductsListResponse, error) {
+func (x *productsListListProductsClient) Recv() (*ProductsListResponse, error) {
 	m := new(ProductsListResponse)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
@@ -67,47 +67,47 @@ func (x *productsListServiceListProductsClient) Recv() (*ProductsListResponse, e
 	return m, nil
 }
 
-// ProductsListServiceService is the service API for ProductsListService service.
+// ProductsListService is the service API for ProductsList service.
 // Fields should be assigned to their respective handler implementations only before
-// RegisterProductsListServiceService is called.  Any unassigned fields will result in the
+// RegisterProductsListService is called.  Any unassigned fields will result in the
 // handler for that method returning an Unimplemented error.
-type ProductsListServiceService struct {
+type ProductsListService struct {
 	// ListProducts is responsible for returning a list of all products with discounts
 	// applied for a given user, if an identifier is passed
-	ListProducts func(*ProductsListRequest, ProductsListService_ListProductsServer) error
+	ListProducts func(*ProductsListRequest, ProductsList_ListProductsServer) error
 }
 
-func (s *ProductsListServiceService) listProducts(_ interface{}, stream grpc.ServerStream) error {
+func (s *ProductsListService) listProducts(_ interface{}, stream grpc.ServerStream) error {
 	m := new(ProductsListRequest)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return s.ListProducts(m, &productsListServiceListProductsServer{stream})
+	return s.ListProducts(m, &productsListListProductsServer{stream})
 }
 
-type ProductsListService_ListProductsServer interface {
+type ProductsList_ListProductsServer interface {
 	Send(*ProductsListResponse) error
 	grpc.ServerStream
 }
 
-type productsListServiceListProductsServer struct {
+type productsListListProductsServer struct {
 	grpc.ServerStream
 }
 
-func (x *productsListServiceListProductsServer) Send(m *ProductsListResponse) error {
+func (x *productsListListProductsServer) Send(m *ProductsListResponse) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-// RegisterProductsListServiceService registers a service implementation with a gRPC server.
-func RegisterProductsListServiceService(s grpc.ServiceRegistrar, srv *ProductsListServiceService) {
+// RegisterProductsListService registers a service implementation with a gRPC server.
+func RegisterProductsListService(s grpc.ServiceRegistrar, srv *ProductsListService) {
 	srvCopy := *srv
 	if srvCopy.ListProducts == nil {
-		srvCopy.ListProducts = func(*ProductsListRequest, ProductsListService_ListProductsServer) error {
+		srvCopy.ListProducts = func(*ProductsListRequest, ProductsList_ListProductsServer) error {
 			return status.Errorf(codes.Unimplemented, "method ListProducts not implemented")
 		}
 	}
 	sd := grpc.ServiceDesc{
-		ServiceName: "productslist.ProductsListService",
+		ServiceName: "productslist.ProductsList",
 		Methods:     []grpc.MethodDesc{},
 		Streams: []grpc.StreamDesc{
 			{
@@ -122,28 +122,28 @@ func RegisterProductsListServiceService(s grpc.ServiceRegistrar, srv *ProductsLi
 	s.RegisterService(&sd, nil)
 }
 
-// NewProductsListServiceService creates a new ProductsListServiceService containing the
-// implemented methods of the ProductsListService service in s.  Any unimplemented
+// NewProductsListService creates a new ProductsListService containing the
+// implemented methods of the ProductsList service in s.  Any unimplemented
 // methods will result in the gRPC server returning an UNIMPLEMENTED status to the client.
 // This includes situations where the method handler is misspelled or has the wrong
 // signature.  For this reason, this function should be used with great care and
 // is not recommended to be used by most users.
-func NewProductsListServiceService(s interface{}) *ProductsListServiceService {
-	ns := &ProductsListServiceService{}
+func NewProductsListService(s interface{}) *ProductsListService {
+	ns := &ProductsListService{}
 	if h, ok := s.(interface {
-		ListProducts(*ProductsListRequest, ProductsListService_ListProductsServer) error
+		ListProducts(*ProductsListRequest, ProductsList_ListProductsServer) error
 	}); ok {
 		ns.ListProducts = h.ListProducts
 	}
 	return ns
 }
 
-// UnstableProductsListServiceService is the service API for ProductsListService service.
+// UnstableProductsListService is the service API for ProductsList service.
 // New methods may be added to this interface if they are added to the service
 // definition, which is not a backward-compatible change.  For this reason,
 // use of this type is not recommended.
-type UnstableProductsListServiceService interface {
+type UnstableProductsListService interface {
 	// ListProducts is responsible for returning a list of all products with discounts
 	// applied for a given user, if an identifier is passed
-	ListProducts(*ProductsListRequest, ProductsListService_ListProductsServer) error
+	ListProducts(*ProductsListRequest, ProductsList_ListProductsServer) error
 }
