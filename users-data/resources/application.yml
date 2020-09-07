@@ -1,8 +1,9 @@
-sqlDbConfig:
-  userInfo:
-    type: postgres
-    host: localhost
-    port: 45432
-    database: user_info
+dataStoreConfig:
+  sqlConfig:
+    userInfoConfig:
+      type: postgres
+      host: localhost
+      port: 45432
+      database: user_info
 serverConfig:
   port: 8080
