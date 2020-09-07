@@ -15,7 +15,6 @@ import (
 )
 
 const (
-	address              = "localhost:8082"
 	configFileNameFormat = "%sapplication%s.yml"
 	defaultConfigPath    = "resources/"
 	defaultProfile       = ""
