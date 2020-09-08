@@ -13,45 +13,45 @@ import (
 // is compatible with the grpc package it is being compiled against.
 const _ = grpc.SupportPackageIsVersion7
 
-// UserInfoServiceClient is the client API for UserInfoService service.
+// UserInfoClient is the client API for UserInfo service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type UserInfoServiceClient interface {
+type UserInfoClient interface {
 	// GetUserInfo is responsible for obtaining the information for a particular user
 	GetUserInfo(ctx context.Context, in *UserInfoRequest, opts ...grpc.CallOption) (*UserInfoResponse, error)
 }
 
-type userInfoServiceClient struct {
+type userInfoClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewUserInfoServiceClient(cc grpc.ClientConnInterface) UserInfoServiceClient {
-	return &userInfoServiceClient{cc}
+func NewUserInfoClient(cc grpc.ClientConnInterface) UserInfoClient {
+	return &userInfoClient{cc}
 }
 
-var userInfoServiceGetUserInfoStreamDesc = &grpc.StreamDesc{
+var userInfoGetUserInfoStreamDesc = &grpc.StreamDesc{
 	StreamName: "GetUserInfo",
 }
 
-func (c *userInfoServiceClient) GetUserInfo(ctx context.Context, in *UserInfoRequest, opts ...grpc.CallOption) (*UserInfoResponse, error) {
+func (c *userInfoClient) GetUserInfo(ctx context.Context, in *UserInfoRequest, opts ...grpc.CallOption) (*UserInfoResponse, error) {
 	out := new(UserInfoResponse)
-	err := c.cc.Invoke(ctx, "/userinfo.UserInfoService/GetUserInfo", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/userinfo.UserInfo/GetUserInfo", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// UserInfoServiceService is the service API for UserInfoService service.
+// UserInfoService is the service API for UserInfo service.
 // Fields should be assigned to their respective handler implementations only before
-// RegisterUserInfoServiceService is called.  Any unassigned fields will result in the
+// RegisterUserInfoService is called.  Any unassigned fields will result in the
 // handler for that method returning an Unimplemented error.
-type UserInfoServiceService struct {
+type UserInfoService struct {
 	// GetUserInfo is responsible for obtaining the information for a particular user
 	GetUserInfo func(context.Context, *UserInfoRequest) (*UserInfoResponse, error)
 }
 
-func (s *UserInfoServiceService) getUserInfo(_ interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func (s *UserInfoService) getUserInfo(_ interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UserInfoRequest)
 	if err := dec(in); err != nil {
 		return nil, err
@@ -61,7 +61,7 @@ func (s *UserInfoServiceService) getUserInfo(_ interface{}, ctx context.Context,
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     s,
-		FullMethod: "/userinfo.UserInfoService/GetUserInfo",
+		FullMethod: "/userinfo.UserInfo/GetUserInfo",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return s.GetUserInfo(ctx, req.(*UserInfoRequest))
@@ -69,8 +69,8 @@ func (s *UserInfoServiceService) getUserInfo(_ interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
-// RegisterUserInfoServiceService registers a service implementation with a gRPC server.
-func RegisterUserInfoServiceService(s grpc.ServiceRegistrar, srv *UserInfoServiceService) {
+// RegisterUserInfoService registers a service implementation with a gRPC server.
+func RegisterUserInfoService(s grpc.ServiceRegistrar, srv *UserInfoService) {
 	srvCopy := *srv
 	if srvCopy.GetUserInfo == nil {
 		srvCopy.GetUserInfo = func(context.Context, *UserInfoRequest) (*UserInfoResponse, error) {
@@ -78,7 +78,7 @@ func RegisterUserInfoServiceService(s grpc.ServiceRegistrar, srv *UserInfoServic
 		}
 	}
 	sd := grpc.ServiceDesc{
-		ServiceName: "userinfo.UserInfoService",
+		ServiceName: "userinfo.UserInfo",
 		Methods: []grpc.MethodDesc{
 			{
 				MethodName: "GetUserInfo",
@@ -92,14 +92,14 @@ func RegisterUserInfoServiceService(s grpc.ServiceRegistrar, srv *UserInfoServic
 	s.RegisterService(&sd, nil)
 }
 
-// NewUserInfoServiceService creates a new UserInfoServiceService containing the
-// implemented methods of the UserInfoService service in s.  Any unimplemented
+// NewUserInfoService creates a new UserInfoService containing the
+// implemented methods of the UserInfo service in s.  Any unimplemented
 // methods will result in the gRPC server returning an UNIMPLEMENTED status to the client.
 // This includes situations where the method handler is misspelled or has the wrong
 // signature.  For this reason, this function should be used with great care and
 // is not recommended to be used by most users.
-func NewUserInfoServiceService(s interface{}) *UserInfoServiceService {
-	ns := &UserInfoServiceService{}
+func NewUserInfoService(s interface{}) *UserInfoService {
+	ns := &UserInfoService{}
 	if h, ok := s.(interface {
 		GetUserInfo(context.Context, *UserInfoRequest) (*UserInfoResponse, error)
 	}); ok {
@@ -108,11 +108,11 @@ func NewUserInfoServiceService(s interface{}) *UserInfoServiceService {
 	return ns
 }
 
-// UnstableUserInfoServiceService is the service API for UserInfoService service.
+// UnstableUserInfoService is the service API for UserInfo service.
 // New methods may be added to this interface if they are added to the service
 // definition, which is not a backward-compatible change.  For this reason,
 // use of this type is not recommended.
-type UnstableUserInfoServiceService interface {
+type UnstableUserInfoService interface {
 	// GetUserInfo is responsible for obtaining the information for a particular user
 	GetUserInfo(context.Context, *UserInfoRequest) (*UserInfoResponse, error)
 }
