@@ -1,9 +1,13 @@
-dataStoreConfig:
-  sqlConfig:
-    userInfoConfig:
+dataStore:
+  sql:
+    userInfo:
       type: postgres
       host: localhost
       port: 45432
       database: user_info
-serverConfig:
+      auth:
+        type: plain
+        user: root
+        pass: insecure
+server:
   port: 8080

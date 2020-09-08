@@ -10,32 +10,41 @@ import (
 
 // AppConfig reflects the all application properties
 type AppConfig struct {
-	DSConfig     DSConfig      `yaml:"dataStoreConfig"`
-	ServerConfig NetworkConfig `yaml:"serverConfig"`
+	DSConfig     DSConfig      `yaml:"dataStore"`
+	ServerConfig NetworkConfig `yaml:"server"`
 }
 
 // DSConfig reflects the data store config properties
 type DSConfig struct {
-	SQLConfig SQLDBConfig `yaml:"sqlConfig"`
+	SQLConfig SQLDBConfig `yaml:"sql"`
 }
 
 // SQLDBConfig reflects the database config properties for sql databases
 type SQLDBConfig struct {
-	UserInfoConfig DBConfig `yaml:"userInfoConfig"`
+	UserInfoConfig DBConfig `yaml:"userInfo"`
 }
 
 // DBConfig reflects the database config properties
 type DBConfig struct {
-	Type     string `yaml:"type"`
-	Host     string `yaml:"host"`
-	Port     int8   `yaml:"port"`
-	Database string `yaml:"database"`
+	Type       string     `yaml:"type"`
+	Host       string     `yaml:"host"`
+	Port       int8       `yaml:"port"`
+	Database   string     `yaml:"database"`
+	AuthConfig AuthConfig `yaml:"auth"`
 }
 
 // NetworkConfig reflects the general network config properties
 type NetworkConfig struct {
 	Host string `yaml:"host"`
 	Port uint   `yaml:"port"`
+}
+
+// AuthConfig reflects the general authentication properties
+type AuthConfig struct {
+	Type string `yaml:"type"`
+	User string `yaml:"user"`
+	Pass string `yaml:"pass"`
+	Repo string `yaml:"repo"`
 }
 
 // GetURI returns the complete URL with concatenated host and port

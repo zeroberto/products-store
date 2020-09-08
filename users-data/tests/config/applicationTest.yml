@@ -1,9 +1,9 @@
-dataStoreConfig:
-  sqlConfig:
-    userInfoConfig:
+dataStore:
+  sql:
+    userInfo:
       type: test
       host: test
       port: 1
       database: test
-serverConfig:
+server:
   port: 1
