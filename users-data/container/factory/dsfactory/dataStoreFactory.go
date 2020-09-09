@@ -11,17 +11,11 @@ import (
 type DataStoreFactory struct{}
 
 // MakeUserInfoDataStore is responsible for providing an instance of UserInfoDataStore
-func (dsf *DataStoreFactory) MakeUserInfoDataStore(c container.Container) (datastore.UserInfoDataStore, error) {
+func (dsf *DataStoreFactory) MakeUserInfoDataStore(c container.Container) datastore.UserInfoDataStore {
 	df := driverfactory.DBDriverFactory{}
-
-	driver, err := df.MakeSQLDBDriver(c, &c.GetAppConfig().DSConfig.SQLConfig.UserInfoConfig)
-	if err != nil {
-		return nil, err
-	}
-
+	driver := df.MakeSQLDBDriver(c, &c.GetAppConfig().DSConfig.UserInfoConfig)
 	eds := &sqldatastore.UserInfoDataStoreSQL{
 		SQLDriver: driver,
 	}
-
-	return eds, nil
+	return eds
 }

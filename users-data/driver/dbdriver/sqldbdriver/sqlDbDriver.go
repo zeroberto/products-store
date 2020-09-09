@@ -8,17 +8,25 @@ import (
 
 // SQLDBGenericDriver is responsible for performing operations on a SQL database
 type SQLDBGenericDriver struct {
-	DB *sql.DB
+	DB func() (*sql.DB, error)
 }
 
 // Exec is responsible for execute an SQL statement
 func (driver *SQLDBGenericDriver) Exec(query string, args ...interface{}) (sql.Result, error) {
-	return driver.DB.Exec(query, args...)
+	db, err := driver.DB()
+	if err != nil {
+		return nil, err
+	}
+	return db.Exec(query, args...)
 }
 
 // Prepare a sql statement for the SQL database
 func (driver *SQLDBGenericDriver) Prepare(query string, args ...interface{}) (*sql.Stmt, error) {
-	return driver.DB.Prepare(query)
+	db, err := driver.DB()
+	if err != nil {
+		return nil, err
+	}
+	return db.Prepare(query)
 }
 
 // PrepareAndExec is responsible for prepare and execute a sql statement for future execution
@@ -42,11 +50,19 @@ func (driver *SQLDBGenericDriver) PrepareAndExec(query string, args ...interface
 // Query is responsible for executing an sql command and returning multiple lines
 // for the SQL database
 func (driver *SQLDBGenericDriver) Query(query string, args ...interface{}) (*sql.Rows, error) {
-	return driver.DB.Query(query, args...)
+	db, err := driver.DB()
+	if err != nil {
+		return nil, err
+	}
+	return db.Query(query, args...)
 }
 
 // QueryRow is responsible for executing an sql command and returning a single line
 // for the SQL database
-func (driver *SQLDBGenericDriver) QueryRow(query string, args ...interface{}) *sql.Row {
-	return driver.DB.QueryRow(query, args...)
+func (driver *SQLDBGenericDriver) QueryRow(query string, args ...interface{}) (*sql.Row, error) {
+	db, err := driver.DB()
+	if err != nil {
+		return nil, err
+	}
+	return db.QueryRow(query, args...), nil
 }
