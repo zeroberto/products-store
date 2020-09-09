@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"log"
 	"net"
-	"net/http"
 	"strings"
 
 	"google.golang.org/grpc"
@@ -35,12 +34,6 @@ func (s *Server) Start() {
 
 	s.initContainer()
 	s.initServer()
-
-	port := s.Container.GetAppConfig().ServerConfig.Port
-
-	log.Printf("Server will start on port %d", port)
-
-	log.Fatal(http.ListenAndServe(fmt.Sprintf(serverHostFormat, port), nil))
 }
 
 func (s *Server) initContainer() {
@@ -65,6 +58,8 @@ func (s *Server) initServer() {
 	if err != nil {
 		log.Fatalf("Failed to init server, error=%v", err)
 	}
+
+	log.Printf("Server will start on port %d", s.Container.GetAppConfig().ServerConfig.Port)
 
 	grpcServer := grpc.NewServer()
 	pb.RegisterUserInfoService(grpcServer, pb.NewUserInfoService(s.initGrpcService()))
