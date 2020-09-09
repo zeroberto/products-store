@@ -1,15 +1,92 @@
 package cmd
 
-import "log"
+import (
+	"flag"
+	"fmt"
+	"log"
+	"net"
+	"net/http"
+	"strings"
+
+	"google.golang.org/grpc"
+
+	"github.com/zeroberto/products-store/users-data/cmd/grpc/grpcservice"
+	"github.com/zeroberto/products-store/users-data/container"
+	"github.com/zeroberto/products-store/users-data/container/appcontainer"
+	"github.com/zeroberto/products-store/users-data/container/factory/grpcfactory"
+	pb "github.com/zeroberto/products-store/users-data/pb/userinfo"
+)
+
+const (
+	configFileNameFormat = "%sapplication%s.yml"
+	defaultConfigPath    = "resources/"
+	defaultProfile       = ""
+	serverHostFormat     = ":%d"
+)
 
 // Server is responsible for starting application services
-type Server struct{}
+type Server struct {
+	Container container.Container
+}
 
 // Start is responsible for initializing the server settings and routes
 func (s *Server) Start() {
 	log.Println("Starting server...")
+
+	s.initContainer()
+	s.initServer()
+
+	port := s.Container.GetAppConfig().ServerConfig.Port
+
+	log.Printf("Server will start on port %d", port)
+
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(serverHostFormat, port), nil))
 }
 
-// Stop is responsible for shutting down the server
-func (s *Server) Stop() {
+func (s *Server) initContainer() {
+	var configPath string
+	var profile string
+
+	flag.StringVar(&configPath, "fconfigPath", defaultConfigPath, "application configuration file path")
+	flag.StringVar(&profile, "fprofile", defaultProfile, "application profile name")
+
+	flag.Parse()
+
+	log.Printf("Application using %s profile", getLogProfile(profile))
+
+	s.Container = new(appcontainer.AppContainer)
+	if err := s.Container.Initialize(getConfigFilePath(configPath, profile)); err != nil {
+		log.Fatalf("Failed to initialize application container, err=%v", err)
+	}
+}
+
+func (s *Server) initServer() {
+	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", s.Container.GetAppConfig().ServerConfig.Port))
+	if err != nil {
+		log.Fatalf("Failed to init server, error=%v", err)
+	}
+
+	grpcServer := grpc.NewServer()
+	pb.RegisterUserInfoService(grpcServer, pb.NewUserInfoService(s.initGrpcService()))
+
+	if err := grpcServer.Serve(lis); err != nil {
+		log.Fatalf("Failed to init server, error=%v", err)
+	}
+}
+
+func (s *Server) initGrpcService() *grpcservice.UserInfoGrpcService {
+	gsf := &grpcfactory.GrpcServiceFactory{}
+	return gsf.MakeUserInfoGrpcService(s.Container)
+}
+
+func getConfigFilePath(configPath string, profile string) string {
+	formattedProfile := strings.Title(strings.ToLower(profile))
+	return fmt.Sprintf(configFileNameFormat, configPath, formattedProfile)
+}
+
+func getLogProfile(profile string) string {
+	if profile != "" {
+		return profile
+	}
+	return "default"
 }
