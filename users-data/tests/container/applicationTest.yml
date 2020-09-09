@@ -1,9 +1,9 @@
 dataStore:
-  sql:
-    userInfo:
-      type: test
-      host: test
-      port: 1
-      database: test
+  userInfo:
+    type: test
+    host: test
+    port: 1
+    database: test
+    databaseType: test
 server:
   port: 1

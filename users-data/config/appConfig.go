@@ -16,21 +16,17 @@ type AppConfig struct {
 
 // DSConfig reflects the data store config properties
 type DSConfig struct {
-	SQLConfig SQLDBConfig `yaml:"sql"`
-}
-
-// SQLDBConfig reflects the database config properties for sql databases
-type SQLDBConfig struct {
 	UserInfoConfig DBConfig `yaml:"userInfo"`
 }
 
 // DBConfig reflects the database config properties
 type DBConfig struct {
-	Type       string     `yaml:"type"`
-	Host       string     `yaml:"host"`
-	Port       int8       `yaml:"port"`
-	Database   string     `yaml:"database"`
-	AuthConfig AuthConfig `yaml:"auth"`
+	Type         string     `yaml:"type"`
+	Host         string     `yaml:"host"`
+	Port         uint       `yaml:"port"`
+	Database     string     `yaml:"database"`
+	DatabaseType string     `yaml:"databaseType"`
+	AuthConfig   AuthConfig `yaml:"auth"`
 }
 
 // NetworkConfig reflects the general network config properties
@@ -78,7 +74,7 @@ func Validate(ac *AppConfig) error {
 	if dsc := new(DSConfig); ac.DSConfig == *dsc {
 		return errors.New("DSConfig is invalid")
 	}
-	if !validateDBConfig(ac.DSConfig.SQLConfig.UserInfoConfig) {
+	if !validateDBConfig(ac.DSConfig.UserInfoConfig) {
 		return errors.New("UserInfoConfig is invalid")
 	}
 	if sc := new(NetworkConfig); ac.ServerConfig == *sc {
@@ -88,7 +84,7 @@ func Validate(ac *AppConfig) error {
 }
 
 func validateDBConfig(dbc DBConfig) bool {
-	if dbc.Type != "" && dbc.Host != "" && dbc.Port != 0 && dbc.Database != "" {
+	if dbc.Type != "" && dbc.Host != "" && dbc.Port != 0 && dbc.Database != "" && dbc.DatabaseType != "" {
 		return true
 	}
 	return false

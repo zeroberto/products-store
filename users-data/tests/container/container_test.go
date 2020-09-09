@@ -44,10 +44,6 @@ func TestInitialize_WhenConfigFileIsInvalid_ThenFailure(t *testing.T) {
 	}
 }
 
-func TestGetAppConfig(t *testing.T) {
-
-}
-
 func TestPutAndGet(t *testing.T) {
 	targetKey := "key"
 	var expected chrono.TimeStamp = &provider.TimeStampImpl{}

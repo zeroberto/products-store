@@ -1,14 +1,14 @@
 dataStore:
-  sql:
-    userInfo:
-      type: postgres
-      host: user-db
-      port: 5432
-      database: user_db
-      auth:
-        type: env
-        user: POSTGRES_USER
-        pass: POSTGRES_PASSWORD
+  userInfo:
+    type: postgres
+    host: user-db
+    port: 5432
+    database: user_db
+    databaseType: postgres
+    auth:
+      type: env
+      user: POSTGRES_USER
+      pass: POSTGRES_PASSWORD
 server:
   port: 8080
   

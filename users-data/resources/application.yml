@@ -1,13 +1,13 @@
 dataStore:
-  sql:
-    userInfo:
-      type: postgres
-      host: localhost
-      port: 45432
-      database: user_info
-      auth:
-        type: plain
-        user: root
-        pass: insecure
+  userInfo:
+    type: sql
+    host: localhost
+    port: 45432
+    database: user_info
+    databaseType: postgres
+    auth:
+      type: plain
+      user: root
+      pass: insecure
 server:
   port: 8080

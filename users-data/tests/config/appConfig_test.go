@@ -58,7 +58,7 @@ func TestValidate_WhenUserInfoConfigIsInvalid_ThenFailure(t *testing.T) {
 	expectedMessage := "UserInfoConfig is invalid"
 
 	appConfig, _ := config.ReadConfig("applicationTest.yml")
-	appConfig.DSConfig.SQLConfig.UserInfoConfig.Port = 0
+	appConfig.DSConfig.UserInfoConfig.Port = 0
 
 	err := config.Validate(appConfig)
 	if err == nil {
