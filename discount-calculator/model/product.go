@@ -6,5 +6,4 @@ type Product struct {
 	PriceInCents int32
 	Title        string
 	Description  string
-	Discount     *Discount
 }
