@@ -10,3 +10,7 @@
 	path = users-data/protobuf
 	url = git@github.com:zeroberto/products-store-proto.git
 	branch = master
+[submodule "discount-calculator/protobuf"]
+	path = discount-calculator/protobuf
+	url = git@github.com:zeroberto/products-store-proto.git
+	branch = master
