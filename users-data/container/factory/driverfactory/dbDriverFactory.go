@@ -26,7 +26,10 @@ func (dsf *DBDriverFactory) MakeSQLDBDriver(c container.Container, dbc *config.D
 func buildSQLDB(c container.Container, dbc *config.DBConfig) (*sql.DB, error) {
 	db, ok := c.Get(container.SQLConnKey)
 	if ok {
-		return db.(*sql.DB), nil
+		if err := db.(*sql.DB).Ping(); err == nil {
+			return db.(*sql.DB), nil
+		}
+		c.Remove(container.SQLConnKey)
 	}
 
 	dsn := createSQLDataSourceName(dbc)
