@@ -1,0 +1,17 @@
+dataStore:
+  product:
+    type: nosql
+    host: products-list
+    port: 27017
+    database: products
+    databaseType: mongo
+    auth:
+      type: plain
+      user: root
+      pass: insecure
+  user:
+    type: grpc
+    host: users-data
+    port: 8080
+server:
+  port: 8080
