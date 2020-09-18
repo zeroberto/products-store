@@ -9,6 +9,7 @@ dataStore:
       type: plain
       user: root
       pass: insecure
+      repo: admin
   user:
     type: grpc
     host: localhost

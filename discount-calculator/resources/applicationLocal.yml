@@ -6,9 +6,10 @@ dataStore:
     database: products
     databaseType: mongo
     auth:
-      type: plain
-      user: root
-      pass: insecure
+      type: env
+      user: PRODUCTS_MONGO_DB_USERNAME
+      pass: PRODUCTS_MONGO_DB_PASSWORD
+      repo: admin
   user:
     type: grpc
     host: users-data
