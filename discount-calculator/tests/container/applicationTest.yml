@@ -1,0 +1,18 @@
+dataStore:
+  product:
+    type: test
+    host: test
+    port: 1
+    database: test
+    databaseType: test
+    auth:
+      type: test
+      user: test
+      pass: test
+      repo: test
+  user:
+    type: test
+    host: test
+    port: 1
+server:
+  port: 1
