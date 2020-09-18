@@ -4,6 +4,4 @@ package model
 type Product struct {
 	ID           string
 	PriceInCents int32
-	Title        string
-	Description  string
 }
