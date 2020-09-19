@@ -4,7 +4,7 @@ dataStore:
     host: products-list
     port: 27017
     database: products
-    databaseType: mongo
+    databaseType: mongodb
     auth:
       type: env
       user: PRODUCTS_MONGO_DB_USERNAME

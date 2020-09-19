@@ -4,7 +4,7 @@ dataStore:
     host: localhost
     port: 47017
     database: products
-    databaseType: mongo
+    databaseType: mongodb
     auth:
       type: plain
       user: root
