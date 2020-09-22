@@ -11,7 +11,6 @@ gen-proto:
 	protoc \
   		--go_out=Mgrpc/service_config/service_config.proto=/internal/proto/grpc_service_config:build/gen \
   		--go-grpc_out=Mgrpc/service_config/service_config.proto=/internal/proto/grpc_service_config:build/gen \
-  		protobuf/proto/productslist/products_list.proto \
 		protobuf/proto/userinfo/user_info.proto \
 		protobuf/proto/discountcalculator/discont_calculator.proto
 	rm -rf pb
