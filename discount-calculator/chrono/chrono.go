@@ -19,4 +19,6 @@ type TimeStamp interface {
 	GetBlackFridayDay() int
 	// GetBlackFridayMonth provides Black Friday month
 	GetBlackFridayMonth() time.Month
+	// GetTimeByNanoSeconds obtains a time from the nanoseconds
+	GetTimeByNanoSeconds(nanos int64) time.Time
 }

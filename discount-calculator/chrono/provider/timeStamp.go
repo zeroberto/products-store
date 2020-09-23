@@ -24,3 +24,9 @@ func (tp *TimeStampImpl) GetBlackFridayDay() int {
 func (tp *TimeStampImpl) GetBlackFridayMonth() time.Month {
 	return chrono.BlackFridayMonth
 }
+
+// GetTimeByNanoSeconds obtains a time from the nanoseconds
+func (tp *TimeStampImpl) GetTimeByNanoSeconds(nanos int64) time.Time {
+	time.Local = time.UTC
+	return time.Unix(0, nanos)
+}

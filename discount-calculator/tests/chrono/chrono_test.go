@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/zeroberto/products-store/discount-calculator/chrono"
+	"github.com/zeroberto/products-store/discount-calculator/chrono/provider"
 )
 
 func TestGetCurrentTime(t *testing.T) {
@@ -43,6 +44,21 @@ func TestGetBlackFridayMonth(t *testing.T) {
 	}
 }
 
+func TestGetTimeByNanoSeconds(t *testing.T) {
+	time.Local = time.UTC
+	expected := time.Date(2020, time.May, 1, 0, 0, 0, 0, time.UTC)
+
+	var ts chrono.TimeStamp = &timeStampMock{}
+
+	got := ts.GetTimeByNanoSeconds(1588291200000000000)
+
+	if expected.String() != got.String() {
+		t.Errorf("GetCurrentTime() failed, expected %v, got %v", expected, got)
+	}
+}
+
+var tsAux chrono.TimeStamp = &provider.TimeStampImpl{}
+
 type timeStampMock struct {
 	Time time.Time
 }
@@ -52,9 +68,13 @@ func (tp *timeStampMock) GetCurrentTime() time.Time {
 }
 
 func (tp *timeStampMock) GetBlackFridayDay() int {
-	return 25
+	return tsAux.GetBlackFridayDay()
 }
 
 func (tp *timeStampMock) GetBlackFridayMonth() time.Month {
-	return time.November
+	return tsAux.GetBlackFridayMonth()
+}
+
+func (tp *timeStampMock) GetTimeByNanoSeconds(nanos int64) time.Time {
+	return tsAux.GetTimeByNanoSeconds(nanos)
 }
