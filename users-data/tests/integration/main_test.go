@@ -7,9 +7,9 @@ import (
 	"testing"
 	"time"
 
+	infra "github.com/zeroberto/integration-test-suite"
 	"github.com/zeroberto/products-store/users-data/cmd"
 	"github.com/zeroberto/products-store/users-data/pb/userinfo"
-	"github.com/zeroberto/products-store/users-data/tests/integration/infra"
 	"google.golang.org/grpc"
 )
 
