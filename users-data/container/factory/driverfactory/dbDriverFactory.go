@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"os"
 
+	_ "github.com/lib/pq" // Required database driver
+
 	"github.com/zeroberto/products-store/users-data/config"
 	"github.com/zeroberto/products-store/users-data/container"
 	"github.com/zeroberto/products-store/users-data/driver/dbdriver"
@@ -34,7 +36,7 @@ func buildSQLDB(c container.Container, dbc *config.DBConfig) (*sql.DB, error) {
 
 	dsn := createSQLDataSourceName(dbc)
 
-	newDb, err := sql.Open(dbc.Type, dsn)
+	newDb, err := sql.Open(dbc.DatabaseType, dsn)
 	if err != nil {
 		return nil, err
 	}
@@ -51,7 +53,7 @@ func buildSQLDB(c container.Container, dbc *config.DBConfig) (*sql.DB, error) {
 func createSQLDataSourceName(dbc *config.DBConfig) string {
 	user, pass := getSQLCredentials(&dbc.AuthConfig)
 
-	return fmt.Sprintf("%s://%s:%s@%s:%d/%s?charset=utf8", dbc.DatabaseType, user, pass, dbc.Host, dbc.Port, dbc.Database)
+	return fmt.Sprintf("%s://%s:%s@%s:%d/%s?sslmode=disable", dbc.DatabaseType, user, pass, dbc.Host, dbc.Port, dbc.Database)
 }
 
 func getSQLCredentials(ac *config.AuthConfig) (user string, pass string) {
