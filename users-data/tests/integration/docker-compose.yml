@@ -1,0 +1,20 @@
+version: "3.8"
+
+services:
+  user-db-test:
+    image: postgres
+    environment: 
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: test
+      POSTGRES_DB: user_info
+    volumes:
+      - ./resources/sql:/docker-entrypoint-initdb.d
+    ports: 
+      - 65432:5432
+    networks: 
+      - test-network
+  
+networks:
+  test-network:
+    name: test-network
+    driver: bridge

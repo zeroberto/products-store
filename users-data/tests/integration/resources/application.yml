@@ -1,0 +1,13 @@
+dataStore:
+  userInfo:
+    type: sql
+    host: localhost
+    port: 65432
+    database: user_info
+    databaseType: postgres
+    auth:
+      type: plain
+      user: test
+      pass: test
+server:
+  port: 7777
