@@ -4,7 +4,6 @@ import (
 	"github.com/zeroberto/products-store/discount-calculator/datastore"
 	"github.com/zeroberto/products-store/discount-calculator/driver/dbdriver"
 	"github.com/zeroberto/products-store/discount-calculator/model"
-	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
@@ -27,8 +26,8 @@ func (pds *ProductDataStoreMongoDB) FindByID(ID string) (*model.Product, error) 
 	}
 
 	product := model.Product{
-		ID:           result.(bson.M)["_id"].(primitive.ObjectID).Hex(),
-		PriceInCents: result.(bson.M)["price_in_cents"].(int32),
+		ID:           result.(primitive.M)["_id"].(primitive.ObjectID).Hex(),
+		PriceInCents: result.(primitive.M)["price_in_cents"].(int32),
 	}
 
 	return &product, nil

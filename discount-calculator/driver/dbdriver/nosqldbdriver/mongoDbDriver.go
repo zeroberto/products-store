@@ -32,5 +32,5 @@ func (driver *MongoDBDriver) GetDocByID(hexID string, collection string) (interf
 		return nil, err
 	}
 
-	return &result, nil
+	return result, nil
 }
