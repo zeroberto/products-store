@@ -27,6 +27,22 @@ func TestRuleProviderUseCaseGetDiscountRules(t *testing.T) {
 	}
 }
 
+func TestRuleProviderUseCaseGetDiscountRules_WhenUserIsNil(t *testing.T) {
+	expected := 1
+
+	targetTime := time.Date(2020, time.December, 20, 0, 0, 0, 0, time.UTC)
+	var targetUser *model.User = nil
+	var ts chrono.TimeStamp = &timeStampMock{Time: targetTime}
+
+	var druc usecase.DiscountRuleUseCase = &discountuc.RuleProviderUseCase{TimeStamp: ts}
+
+	got := len(druc.GetDiscountRules(targetTime, targetUser))
+
+	if expected != got {
+		t.Errorf("GetDiscountRules() failed, expected %v, got %v", expected, got)
+	}
+}
+
 func TestRuleCalculatorUseCaseCalculateDiscount_WhenIsBlackFriday_ThenDiscountEqualToTenPercent(t *testing.T) {
 	expected := &model.Discount{
 		Percentage:   0.10,
@@ -133,4 +149,9 @@ func (tp *timeStampMock) GetBlackFridayDay() int {
 
 func (tp *timeStampMock) GetBlackFridayMonth() time.Month {
 	return time.November
+}
+
+func (tp *timeStampMock) GetTimeByNanoSeconds(nanos int64) time.Time {
+	time.Local = time.UTC
+	return time.Unix(0, nanos)
 }

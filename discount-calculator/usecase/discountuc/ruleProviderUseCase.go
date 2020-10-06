@@ -26,19 +26,23 @@ type RuleProviderUseCase struct {
 
 // GetDiscountRules is responsible for providing all discount rules
 func (drpuc *RuleProviderUseCase) GetDiscountRules(time time.Time, user *model.User) []model.DiscountRule {
-	return []model.DiscountRule{
-		&rule.BlackFridayRule{
-			Time:             time,
-			BlackFridayDay:   drpuc.TimeStamp.GetBlackFridayDay(),
-			BlackFridayMonth: drpuc.TimeStamp.GetBlackFridayMonth(),
-			BlackFridayPct:   BlackFridayPct,
-			DefaultPct:       DefaultPct,
-		},
-		&rule.UserBirthdayRule{
+	rules := []model.DiscountRule{}
+	rules = append(rules, &rule.BlackFridayRule{
+		Time:             time,
+		BlackFridayDay:   drpuc.TimeStamp.GetBlackFridayDay(),
+		BlackFridayMonth: drpuc.TimeStamp.GetBlackFridayMonth(),
+		BlackFridayPct:   BlackFridayPct,
+		DefaultPct:       DefaultPct,
+	})
+
+	if user != nil {
+		rules = append(rules, &rule.UserBirthdayRule{
 			Time:            time,
 			User:            user,
 			UserBirthdayPct: UserBirthdayPct,
 			DefaultPct:      DefaultPct,
-		},
+		})
 	}
+
+	return rules
 }
