@@ -1,0 +1,18 @@
+dataStore:
+  product:
+    type: nosql
+    host: localhost
+    port: 65017
+    database: products
+    databaseType: mongodb
+    auth:
+      type: plain
+      user: test
+      pass: test
+      repo: admin
+  user:
+    type: grpc
+    host: localhost
+    port: 57773
+server:
+  port: 7777

@@ -1,0 +1,13 @@
+dataStore:
+  userInfo:
+    type: sql
+    host: user-db-test
+    port: 5432
+    database: user_info
+    databaseType: postgres
+    auth:
+      type: plain
+      user: test
+      pass: test
+server:
+  port: 7773
