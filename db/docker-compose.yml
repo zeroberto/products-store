@@ -1,8 +1,22 @@
 version: "3.8"
 
 services:
+  product-db:
+    image: mongo:4.4.1-bionic
+    environment: 
+      MONGO_INITDB_DATABASE: products
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: insecure
+    ports:
+      - 47017:27017
+    volumes:
+      - ./product_db:/docker-entrypoint-initdb.d
+      - /containers/mongo:/data/db
+    networks: 
+      - products-store
+      
   user-db:
-    image: postgres
+    image: postgres:12
     environment: 
       POSTGRES_USER: root
       POSTGRES_PASSWORD: insecure
@@ -15,22 +29,8 @@ services:
     networks: 
       - products-store
 
-  product-db:
-    image: mongo
-    environment: 
-      MONGO_INITDB_DATABASE: products
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: insecure
-    ports:
-      - 47017:27017
-    volumes:
-      - ./product_db:/docker-entrypoint-initdb.d
-      - /containers/mongo:/data/db
-    networks: 
-      - products-store
-
   adminer:
-    image: adminer
+    image: adminer:4.7.7-standalone
     restart: always
     ports:
       - 48080:8080
@@ -38,7 +38,7 @@ services:
       - products-store
 
   mongo-express:
-    image: mongo-express
+    image: mongo-express:0.54.0
     restart: always
     ports:
       - 48081:8081

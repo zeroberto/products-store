@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   product-db-test:
-    image: mongo
+    image: mongo:4.4.1-bionic
     environment: 
       MONGO_INITDB_DATABASE: products
       MONGO_INITDB_ROOT_USERNAME: test
@@ -13,19 +13,9 @@ services:
       - ./resources/products/nosql:/docker-entrypoint-initdb.d
     networks: 
       - test-network
-
-  user-data-test:
-    build:
-      context: ./resources/userinfo
-    ports:
-      - 57773:7773
-    networks: 
-      - test-network
-    depends_on: 
-      - user-db-test
-
+  
   user-db-test:
-    image: postgres
+    image: postgres:12
     environment: 
       POSTGRES_USER: test
       POSTGRES_PASSWORD: test
@@ -37,6 +27,16 @@ services:
     networks: 
       - test-network
   
+  user-data-test:
+    build:
+      context: ./resources/userinfo
+    ports:
+      - 57773:7773
+    networks: 
+      - test-network
+    depends_on: 
+      - user-db-test
+
 networks:
   test-network:
     name: test-network
