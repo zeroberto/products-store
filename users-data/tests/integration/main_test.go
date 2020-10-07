@@ -27,7 +27,7 @@ func TestFindUserInfo(t *testing.T) {
 		FirstName:   "User",
 		LastName:    "Test",
 		DateOfBirth: 315532800000000000,
-		CreatedAt:   2598918400000000000,
+		CreatedAt:   1598918400000000000,
 	}
 
 	client, closeConn := createClient()
@@ -114,13 +114,13 @@ func createClient() (client userinfo.UserInfoClient, closeConn func()) {
 
 func compareTo(ui1 *userinfo.UserInfoResponse, ui2 *userinfo.UserInfoResponse) bool {
 	switch {
-	case ui1.Id != ui2.Id:
-	case ui1.FirstName != ui2.FirstName:
-	case ui1.LastName != ui2.LastName:
-	case ui1.DateOfBirth != ui2.DateOfBirth:
-	case ui1.CreatedAt != ui2.CreatedAt:
-	case ui1.UpdatedAt != ui2.UpdatedAt:
-	case ui1.DeactivatedAt != ui2.DeactivatedAt:
+	case ui1.Id != ui2.Id,
+		ui1.FirstName != ui2.FirstName,
+		ui1.LastName != ui2.LastName,
+		ui1.DateOfBirth != ui2.DateOfBirth,
+		ui1.CreatedAt != ui2.CreatedAt,
+		ui1.UpdatedAt != ui2.UpdatedAt,
+		ui1.DeactivatedAt != ui2.DeactivatedAt:
 		return false
 	}
 	return true
