@@ -17,8 +17,7 @@ type DBFactory struct{}
 
 // MakeMongoDB is responsible for providing an MongoDB client instance
 func (dbf *DBFactory) MakeMongoDB(c container.Container, dbc *config.DBConfig) (*mongo.Database, error) {
-	client, ok := c.Get(container.ProductDBConnKey)
-	if ok {
+	if client, ok := c.Get(container.ProductDBConnKey); ok {
 		if err := client.(*mongo.Client).Ping(context.Background(), nil); err == nil {
 			return client.(*mongo.Client).Database(dbc.Database), nil
 		}
@@ -30,12 +29,12 @@ func (dbf *DBFactory) MakeMongoDB(c container.Container, dbc *config.DBConfig) (
 	defer cancel()
 
 	connectionURL := createMongoDataSourceName(dbc)
-	newClient, err := mongo.Connect(ctx, options.Client().ApplyURI(connectionURL))
+	client, err := mongo.Connect(ctx, options.Client().ApplyURI(connectionURL))
 	if err != nil {
 		return nil, err
 	}
 
-	err = newClient.Ping(context.Background(), nil)
+	err = client.Ping(context.Background(), nil)
 
 	if err != nil {
 		return nil, err
@@ -43,7 +42,7 @@ func (dbf *DBFactory) MakeMongoDB(c container.Container, dbc *config.DBConfig) (
 
 	c.Put(container.ProductDBConnKey, client)
 
-	return newClient.Database(dbc.Database), nil
+	return client.Database(dbc.Database), nil
 }
 
 func createMongoDataSourceName(dbc *config.DBConfig) string {

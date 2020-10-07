@@ -23,7 +23,7 @@ func (uds *UserDataStoreGrpc) FindByID(ID int64) (*model.User, error) {
 	defer cancel()
 
 	uireq := &userinfo.UserInfoRequest{}
-	uireq.Id = 1
+	uireq.Id = ID
 
 	client, err := uds.Client()
 	if err != nil {

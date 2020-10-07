@@ -1,6 +1,7 @@
 package database
 
 import (
+	"github.com/pkg/errors"
 	"github.com/zeroberto/products-store/discount-calculator/datastore"
 	"github.com/zeroberto/products-store/discount-calculator/driver/dbdriver"
 	"github.com/zeroberto/products-store/discount-calculator/model"
@@ -22,7 +23,7 @@ type ProductDataStoreMongoDB struct {
 func (pds *ProductDataStoreMongoDB) FindByID(ID string) (*model.Product, error) {
 	result, err := pds.DBDriver.GetDocByID(ID, ProductsCollection)
 	if err != nil {
-		return nil, &datastore.Error{Cause: err}
+		return nil, &datastore.Error{Cause: errors.Wrap(err, "Could not retrieve product")}
 	}
 
 	product := model.Product{

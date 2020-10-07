@@ -5,10 +5,5 @@ import (
 )
 
 func main() {
-
-	server := new(cmd.Server)
-
-	defer server.Stop()
-
-	server.Start()
+	cmd.NewServer().Start()
 }
