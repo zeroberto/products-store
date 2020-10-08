@@ -1,6 +1,7 @@
 package provider
 
 import (
+	"os"
 	"time"
 
 	"github.com/zeroberto/products-store/discount-calculator/chrono"
@@ -12,6 +13,11 @@ type TimeStampImpl struct{}
 
 // GetCurrentTime provides date and time of the moment
 func (tp *TimeStampImpl) GetCurrentTime() time.Time {
+	if defaultLocaltime := os.Getenv("DEFAULT_LOCALTIME"); defaultLocaltime != "" {
+		if localtime, err := time.Parse(time.RFC3339, defaultLocaltime); err == nil {
+			return localtime
+		}
+	}
 	return time.Now()
 }
 

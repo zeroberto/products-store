@@ -7,13 +7,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/zeroberto/products-store/discount-calculator/container"
-
+	infra "github.com/zeroberto/integration-test-suite"
 	"github.com/zeroberto/products-store/discount-calculator/chrono"
 	"github.com/zeroberto/products-store/discount-calculator/chrono/provider"
-
-	infra "github.com/zeroberto/integration-test-suite"
 	"github.com/zeroberto/products-store/discount-calculator/cmd"
+	"github.com/zeroberto/products-store/discount-calculator/container"
 	"github.com/zeroberto/products-store/discount-calculator/pb/discountcalculator"
 	"google.golang.org/grpc"
 )
