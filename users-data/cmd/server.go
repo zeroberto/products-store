@@ -46,8 +46,7 @@ func (s *Server) initContainer() {
 	flag.Parse()
 
 	log.Printf("Application using %s profile", getLogProfile(profile))
-
-	s.Container = new(appcontainer.AppContainer)
+  
 	if err := s.Container.Initialize(getConfigFilePath(configPath, profile)); err != nil {
 		log.Fatalf("Failed to initialize application container, err=%v", err)
 	}

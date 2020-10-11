@@ -88,8 +88,7 @@ func teardown() {
 }
 
 func initServer() {
-	server := new(cmd.Server)
-	server.Start()
+	cmd.NewServer().Start()
 }
 
 func validateStructure(dockerComposeFileName string) {
