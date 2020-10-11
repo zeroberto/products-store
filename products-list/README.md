@@ -73,7 +73,35 @@ The default profile for running via gradle is empty, referencing the standard `a
 
 > To run successfully, it is necessary to have a file named applicationProfileName.yml in the project resources folder.
 
-# Future improvements
+### Tests
+
+To run the tests, simply use the command:
+
+```shell script
+./gradlew test
+```
+
+#### Integration
+
+To run the integration tests, simply use the command:
+
+```shell script
+./gradlew integTest
+```
+
+If you want to ensure that the projects used in the integration tests are in the latest versions of the repository, execute the following command. That's because the docker usually uses cache to make the build faster.
+
+```shell script
+cd src/integTest/resources/docker
+
+docker-compose build --no-cache
+```
+
+#### Limitations
+
+Integration tests are currently limited to Unix-based systems.
+
+## Future improvements
 
 * Tests to retrieve the values of the authentication settings with environment variables
 * Create integration tests
