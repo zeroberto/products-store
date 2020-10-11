@@ -79,6 +79,13 @@ func getConfigFilePath(configPath string, profile string) string {
 	return fmt.Sprintf(configFileNameFormat, configPath, formattedProfile)
 }
 
+// NewServer is responsible for creating a new instance of Server
+func NewServer() *Server {
+	s := new(Server)
+	s.Container = appcontainer.NewContainer()
+	return s
+}
+
 func getLogProfile(profile string) string {
 	if profile != "" {
 		return profile

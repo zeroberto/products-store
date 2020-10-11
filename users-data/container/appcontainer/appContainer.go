@@ -6,19 +6,18 @@ import (
 
 	"github.com/pkg/errors"
 	"github.com/zeroberto/products-store/users-data/config"
+	"github.com/zeroberto/products-store/users-data/container"
 )
 
 // AppContainer is responsible for implementing the application container concepts
 type AppContainer struct {
 	mux       sync.RWMutex
-	instaces  map[string]interface{}
+	instances map[string]interface{}
 	AppConfig *config.AppConfig
 }
 
 // Initialize is responsible for initializing all application structs
 func (sc *AppContainer) Initialize(configFilename string) error {
-	sc.instaces = make(map[string]interface{})
-
 	appConfig, err := config.ReadConfig(configFilename)
 	if err != nil {
 		return errors.Wrap(err, fmt.Sprintf("did not read config file: file=%s, err=%v", configFilename, err))
@@ -36,7 +35,7 @@ func (sc *AppContainer) Initialize(configFilename string) error {
 // Get is responsible for returning the instance of a struct
 func (sc *AppContainer) Get(key string) (instance interface{}, ok bool) {
 	sc.mux.RLock()
-	instance, ok = sc.instaces[key]
+	instance, ok = sc.instances[key]
 	sc.mux.RUnlock()
 
 	return
@@ -50,13 +49,20 @@ func (sc *AppContainer) GetAppConfig() *config.AppConfig {
 // Put is responsible for adding an instance of a struct to the container
 func (sc *AppContainer) Put(key string, value interface{}) {
 	sc.mux.Lock()
-	sc.instaces[key] = value
+	sc.instances[key] = value
 	sc.mux.Unlock()
 }
 
 // Remove is responsible for remove an instance of a struct to the container
 func (sc *AppContainer) Remove(key string) {
 	sc.mux.Lock()
-	delete(sc.instaces, key)
+	delete(sc.instances, key)
 	sc.mux.Unlock()
+}
+
+// NewContainer is responsible for creating a new instance of Container
+func NewContainer() container.Container {
+	c := new(AppContainer)
+	c.instances = make(map[string]interface{})
+	return c
 }
