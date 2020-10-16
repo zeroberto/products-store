@@ -15,7 +15,7 @@ public final class DiscountGrpcClient {
   private final DiscountCalculatorGrpc.DiscountCalculatorStub asyncStub;
 
   public DiscountGrpcClient(String host) {
-    this(forTarget(host));
+    this(forTarget(host).usePlaintext());
   }
 
   public DiscountGrpcClient(ManagedChannelBuilder<?> channelBuilder) {

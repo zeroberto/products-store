@@ -1,10 +1,6 @@
 grpcServerConfig:
   productConfig:
     port: 8080
-grpcClientConfig:
-  discountConfig:
-    host: http://localhost
-    port: 58082
 useCaseConfig:
   productConfig:
     dsConfig:
