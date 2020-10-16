@@ -1,0 +1,58 @@
+version: "3.8"
+
+services:
+  product-db-test:
+    image: mongo:4.4.1-bionic
+    environment:
+      MONGO_INITDB_DATABASE: products
+      MONGO_INITDB_ROOT_USERNAME: test
+      MONGO_INITDB_ROOT_PASSWORD: test
+    ports:
+      - 65017:27017
+    volumes:
+      - ./products/nosql:/docker-entrypoint-initdb.d
+    networks:
+      - test-network
+
+  user-db-test:
+    image: postgres:12
+    environment:
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: test
+      POSTGRES_DB: user_info
+    volumes:
+      - ./userinfo/sql:/docker-entrypoint-initdb.d
+    ports:
+      - 65432:5432
+    networks:
+      - test-network
+
+  users-data-test:
+    build:
+      context: ./userinfo
+    restart: always
+    ports:
+      - 57771:7771
+    networks:
+      - test-network
+    depends_on:
+      - user-db-test
+
+  discount-calculator-test:
+    build:
+      context: ./discountcalculator
+    restart: always
+    ports:
+      - 57772:7772
+    environment:
+      DEFAULT_LOCALTIME:
+    networks:
+      - test-network
+    depends_on:
+      - product-db-test
+      - users-data-test
+
+networks:
+  test-network:
+    name: test-network
+    driver: bridge

@@ -1,0 +1,18 @@
+grpcServerConfig:
+  productConfig:
+    port: 7773
+useCaseConfig:
+  productConfig:
+    dsConfig:
+      type: mongo
+      host: localhost:65017
+      database: products
+      auth:
+        type: plain
+        user: test
+        pass: test
+        repo: admin
+  discountConfig:
+    dsConfig:
+      type: grpc
+      host: localhost:57772
